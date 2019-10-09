@@ -173,7 +173,7 @@ Com o banco criado podemos adicionar nosso prieiro usuário, o SUPERUSER do sist
 Criando o SUPERUSER
 -------------------
 
-comando `python manage.py  createsueruser`
+comando `python manage.py  createsuperuser`
 
 .. code-block:: bash
 
@@ -267,7 +267,15 @@ Adicionando conteúdo ao projeto
 
 .. code-block:: Python3
 
+
     # Conteúdo do arquivo app1/models.py
+
+
+    TIPO = (
+        (1, 'despesa'),
+        (2, 'receita')
+    )
+
 
     class Emissor(models.Model):
         '''
