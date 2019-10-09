@@ -14,6 +14,8 @@ Para ter certeza que tenho Python executo o python pedindo a versão.
 
 .. code-block:: bash
 
+    # no seu shell execute ... o comando abaixo
+
     $>python -V
 
 ... o resultado esperado é  a versão do Python instalada, algo como "Python 3.X.X", onde X é uma variação da versão 3.
@@ -30,6 +32,8 @@ Instale o Django ...   depois de ter seu Python3 instalado.
 
 .. code-block:: bash
 
+    # no seu shell execute ... o comando abaixo
+
     $>pip install django
 
 
@@ -38,6 +42,8 @@ Valide se Django OK
 Validando que o Django está instalado e verificamos sua versao ..
 
 .. code-block:: bash
+
+    # no seu shell execute ... o comando abaixo
 
     $>django-admin --version
 
@@ -55,7 +61,8 @@ A sintaxe do comando é `django-admin startproject <nome do projeto>`
 
 .. code-block:: bash
 
-    # no seu shell
+    # no seu shell execute ... o comando abaixo
+
     $>django-admin startproject prjdj
 
 O Django criar um diretório com o nome do projeto (ex.: "prjdj")
@@ -73,6 +80,8 @@ comando `python manage.py runserver`
 
 
 .. code-block:: bash
+
+    # no seu shell execute ... o comando abaixo
 
     $>python manage.py  runserver
     Watching for file changes with StatReloader
@@ -106,7 +115,7 @@ No seu navegador você deverá ver uma página como a abaixo.
 Entenda a saída do comando `runserver` ...
 ------------------------------------------
 
-O servidor de desenvolvimento do Django está rodando e você pode editar seu código sem desligá-lo. 
+O servidor de desenvolvimento do Django está rodando e você pode editar seu código sem desligá-lo.
 
 Desde que não tenha erros, ele não deve parar ( ... boa sorte!)
 
@@ -121,18 +130,20 @@ Ao executar seu projeto, o Django identificou que existem migrações para serem
 Essa migrações são referentes as aplicações Django "enbutidas" no Django. Uma delas é o **sistema de gestão de usuários**
 
 
-Seguindo a sugestão do Django, vamos rodar essas migrações para que nosso banco seja criado... 
+Seguindo a sugestão do Django, vamos rodar essas migrações para que nosso banco seja criado...
 
 
 Criando o Banco de dados
 ------------------------
 
-comando *`python manage.py migrate`*
+comando *`python manage.py migrate:wq:`*
 
-    Atenção: se o banco de dados for o POSTGRESQL você deve ANTES criar o banco de dados e depois rodar as migrations - neste caso o Django somente criar as tabelas. 
+    Atenção: se o banco de dados for o POSTGRESQL você deve ANTES criar o banco de dados e depois rodar as migrations - neste caso o Django somente criar as tabelas.
 
 
 .. code-block:: bash
+
+    # no seu shell execute ... o comando abaixo
 
     >$python manage.py migrate
     Operations to perform:
