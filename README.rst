@@ -348,6 +348,27 @@ Para criar as tabelas no banco de dados, referentes aos modelos que acabamos de 
 Colocando seu modelo no Admin do Django
 ---------------------------------------
 
+Precisamos "registrar" nossos modelos no admin do Django 
+
+
+.. code-block:: Python3
+
+    # conteúdo do app1/admin.py
+
+    from django.contrib import admin
+    from app1.models import Emissor, Lancamento
+
+
+    class EmissorAdmin(admin.ModelAdmin):
+        pass
+    admin.site.register(Emissor, EmissorAdmin)
+
+
+    class LancamentoAdmin(admin.ModelAdmin):
+        pass
+    admin.site.register(Lancamento, LancamentoAdmin)
+
+
 ver em https://docs.djangoproject.com/en/2.2/ref/contrib/admin/#modeladmin-objects
 
 
