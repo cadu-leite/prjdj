@@ -136,7 +136,7 @@ Seguindo a sugestão do Django, vamos rodar essas migrações para que nosso ban
 Criando o Banco de dados
 ------------------------
 
-comando *`python manage.py migrate:wq:`*
+comando *`python manage.py migrate`*
 
     Atenção: se o banco de dados for o POSTGRESQL você deve ANTES criar o banco de dados e depois rodar as migrations - neste caso o Django somente criar as tabelas.
 
@@ -167,9 +167,188 @@ comando *`python manage.py migrate:wq:`*
     Applying auth.0011_update_proxy_permissions... OK
     Applying sessions.0001_initial... OK
 
+Com o banco criado podemos adicionar nosso prieiro usuário, o SUPERUSER do sistema...
+
+
+Criando o SUPERUSER
+-------------------
+
+comando `python manage.py  createsueruser`
+
+.. code-block:: bash
+
+    # no seu shell ...
+
+    $>python manage.py  createsueruser
+
+    #... a saída esperada está abaixo.
+    Unknown command: 'createsueruser'. Did you mean createsuperuser?
+    Type 'manage.py help' for usage.
+    (prjdj) 20191009.Wed16:39:55cadu>/Volumes/p10G/prj/prjdj>
+    cadu.[489] (master *=)$python manage.py createsuperuser
+    Username (leave blank to use 'menunome'):mybeautifulusername
+    Email address: c@mail.com
+    Password:
+    Password (again):
+    # as linhas abaixo são mostradas caso o Django entende que o password fornecido seja fraco...
+    # basta dar um "y" (yes) para confirmar a criação do nosso user.
+    This password is too short. It must contain at least 8 characters.
+    This password is too common.
+    This password is entirely numeric.
+    Bypass password validation and create user anyway? [y/N]: y
+
+
+
+
+Adicionando uma "aplicação Django" ao projeto.
+==============================================
+
+comando `python manage.py startapp <nome da minha app>`
+
+    Não utilize espaços, e é uma boa prática usar nomes em caixa baixa (letras minússculas)
+
+.. code-block:: bash
+
+    # no seu bash ... minha aplicação se chama "app1"
+    $>python manage.py startapp app1
+
+Além de criar a aplicação, para que o django reconheça como parte do projeto eu preciso adicionar minha aplicação no `settings.py` dentro da variávels `INSTALLED_APPS`.
+
+
+.. code-block:: python
+
+    # arquivo settings.py
+
+    INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    'app1',  # <<<<  MINHA NOVA APP.
+    ]
+
+
+Após a criação da minha APP a árvode de diretórios deve estar deste modo::
+
+
+    prjdj
+        ├── README.rst
+        ├── app1
+        │   ├── __init__.py
+        │   ├── admin.py
+        │   ├── apps.py
+        │   ├── migrations
+        │   │   └── __init__.py
+        │   ├── models.py
+        │   ├── tests.py
+        │   └── views.py
+        ├── db.sqlite3
+        ├── docs
+        │   └── imgs
+        │       └── django_tela_inicial.png
+        ├── manage.py
+        └── prjdj
+            ├── __init__.py
+            ├── __pycache__
+            │   ├── __init__.cpython-37.pyc
+            │   ├── settings.cpython-37.pyc
+            │   ├── urls.cpython-37.pyc
+            │   └── wsgi.cpython-37.pyc
+            ├── settings.py
+            ├── urls.py
+            └── wsgi.py
+
+
+Adicionando conteúdo ao projeto
+-------------------------------
+
+.. code-block:: Python3
+
+    # Conteúdo do arquivo app1/models.py
+
+    class Emissor(models.Model):
+        '''
+        Modelo representa o Emissor da Nota Fiscal
+        O Emissor é uma empresa que emite a nota fiscal para que eu a pague, ou, minha empresa emite uma nota fiscal.
+        '''
+        cpnj = models.CharField('CNPJ', max_length=50, primary_key=True)
+        nome = models.CharField('nome', max_length=50)
+
+        def __str__(self):
+
+            return str(self.cnpj)
+
+
+    class Lancamento(models.Model):
+
+        num_nota_fiscal = models.CharField('numero da nota fiscal', max_length=50, blank=True, null=True)
+        receita_despesa = models.PositiveSmallIntegerField('receita ou despesa', choices=TIPO)  # True = Receita
+
+        emissor = models.ForeignKey(Emissor, blank=True, null=True, on_delete=models.CASCADE)
+
+        valor_nota = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+        desconto = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+        valor_total = models.DecimalField(max_digits=12, decimal_places=2, blank=False, null=False)
+
+        class Meta:
+            verbose_name = 'Lançamento'
+            verbose_name_plural = 'Lançamentos'
+
+        def __str__(self):
+
+            return str(self.pk)
+
+O model, é a representação Python do nosso tipo de conteúdo
+
+Para criar as tabelas no banco de dados, referentes aos modelos que acabamos de criar.
+
+#. Executar o `makemigrations` para criar o código Python que irá gerar as tabelas
+#. Executar o `miagrate` para que de fato as alterações sejam aplicadas ao banco de dados . 
+
+... então `makemigrations`
+
+.. code-block:: bash
+
+    # no seu shell ...
+
+    $>python manage.py  makemigrations
+
+    # ... saida esperada.
+    Migrations for 'app1':
+      app1/migrations/0001_initial.py
+        - Create model Emissor
+        - Create model Lancamento
+
+... e após o makemigrations, executamos o `migrate`
+
+.. code-block:: bash
+
+    # no seu shell ...
+
+    $>python manage.py  migrate
+
+    # ... saida esperada.
+    Operations to perform:
+      Apply all migrations: admin, app1, auth, contenttypes, sessions
+    Running migrations:
+      Applying app1.0001_initial... OK
+
+
+
+
+
+
+---------------
+
+
+Gerar modelo do banco (ERD) como Django-Extensions
+    $>python manage.py  graph_models -a -g -o app1
 
 git
----
+---z
 
 
 git init
