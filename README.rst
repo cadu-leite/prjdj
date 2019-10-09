@@ -345,7 +345,10 @@ Para criar as tabelas no banco de dados, referentes aos modelos que acabamos de 
       Applying app1.0001_initial... OK
 
 
+Colocando seu modelo no Admin do Django
+---------------------------------------
 
+ver em https://docs.djangoproject.com/en/2.2/ref/contrib/admin/#modeladmin-objects
 
 
 
