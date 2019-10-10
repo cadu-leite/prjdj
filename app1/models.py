@@ -13,12 +13,10 @@ class Emissor(models.Model):
     O emissor é quem Emite a nota Fiscal
     '''
 
-    cpnj = models.CharField('CNPJ', max_length=50, primary_key=True)
+    cnpj = models.CharField('CNPJ', max_length=50, primary_key=True)
     nome = models.CharField('nome', max_length=50)
 
-
     def __str__(self):
-
         return str(self.cnpj)
 
 
