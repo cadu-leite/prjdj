@@ -287,7 +287,7 @@ Adicionando conteúdo ao projeto
 
         def __str__(self):
 
-            return str(self.cnpj)
+            return str(self.cpnj) 
 
 
     class Lancamento(models.Model):
@@ -380,7 +380,7 @@ Gerar modelo do banco (ERD) como Django-Extensions
     $>python manage.py  graph_models -a -g -o app1
 
 git
----z
+--------
 
 
 git init
