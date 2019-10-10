@@ -267,9 +267,9 @@ Adicionando conteúdo ao projeto
 
 .. code-block:: Python3
 
-
     # Conteúdo do arquivo app1/models.py
 
+    from django.db import models
 
     TIPO = (
         (1, 'despesa'),
